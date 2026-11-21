@@ -1,0 +1,16 @@
+node_modules/
+dist/
+release/
+coverage/
+playwright-report/
+test-results/
+.env
+.env.local
+.env.*.local
+.firebase/
+.agents/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+*.tsbuildinfo
+.DS_Store
