@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trailmind — Uninstall Feedback</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-subtle: #f8fafc;
+        --card: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --faint: #94a3b8;
+        --border: #e2e8f0;
+        --accent: #2563eb;
+        --accent-hover: #1d4ed8;
+        --accent-soft: rgba(37, 99, 235, 0.08);
+        --emerald-soft: rgba(16, 185, 129, 0.12);
+        --emerald-text: #047857;
+        --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 16px 36px -12px rgba(15, 23, 42, 0.08);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #030712;
+          --bg-subtle: #0b1120;
+          --card: #0f172a;
+          --text: #f8fafc;
+          --muted: #94a3b8;
+          --faint: #64748b;
+          --border: #1e293b;
+          --accent: #3b82f6;
+          --accent-hover: #2563eb;
+          --accent-soft: rgba(59, 130, 246, 0.14);
+          --emerald-soft: rgba(16, 185, 129, 0.16);
+          --emerald-text: #34d399;
+          --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 16px 40px -12px rgba(0, 0, 0, 0.55);
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-family:
+          'Inter',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .backdrop {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        background: radial-gradient(55% 40% at 50% -10%, var(--accent-soft), transparent 70%);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      header {
+        border-bottom: 1px solid var(--border);
+        background: color-mix(in srgb, var(--bg) 82%, transparent);
+        backdrop-filter: blur(12px);
+      }
+
+      .nav-inner {
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 16px;
+        letter-spacing: -0.02em;
+      }
+
+      .back-link {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
+        text-decoration: none;
+        padding: 7px 13px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        transition: color 0.15s ease, border-color 0.15s ease;
+      }
+
+      .back-link:hover {
+        color: var(--text);
+        border-color: var(--accent);
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 20px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 560px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+        padding: 32px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 11px;
+        border-radius: 999px;
+        background: var(--emerald-soft);
+        color: var(--emerald-text);
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      h1 {
+        margin: 14px 0 8px;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+      }
+
+      .lead {
+        margin: 0 0 22px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      .option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 14px;
+        margin-bottom: 8px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--bg-subtle);
+        font-size: 13.5px;
+        cursor: pointer;
+        transition: border-color 0.15s ease, background 0.15s ease;
+      }
+
+      .option:hover {
+        border-color: var(--accent);
+      }
+
+      .option input {
+        accent-color: var(--accent);
+        width: 15px;
+        height: 15px;
+        margin: 0;
+      }
+
+      textarea {
+        width: 100%;
+        margin-top: 10px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--bg-subtle);
+        color: var(--text);
+        font: inherit;
+        font-size: 13.5px;
+        resize: vertical;
+        min-height: 84px;
+      }
+
+      textarea:focus {
+        outline: 2px solid var(--accent);
+        outline-offset: 1px;
+      }
+
+      .actions {
+        margin-top: 18px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .btn-primary {
+        padding: 11px 20px;
+        border-radius: 11px;
+        border: none;
+        background: var(--accent);
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 13.5px;
+        cursor: pointer;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-hover);
+      }
+
+      .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 16px;
+        border-radius: 11px;
+        border: 1px solid var(--border);
+        color: var(--text);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .btn-ghost:hover {
+        border-color: var(--accent);
+      }
+
+      .thanks {
+        display: none;
+        padding: 18px;
+        border-radius: 14px;
+        background: var(--emerald-soft);
+        color: var(--emerald-text);
+        font-size: 14px;
+      }
+
+      .thanks strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .privacy-note {
+        margin: 20px 0 0;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+        font-size: 12px;
+        color: var(--faint);
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 20px 0;
+        font-size: 12.5px;
+        color: var(--muted);
+      }
+
+      .footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .footer-inner a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      .footer-inner a:hover {
+        color: var(--text);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="backdrop" aria-hidden="true"></div>
+
+    <header>
+      <div class="container nav-inner">
+        <a href="./index.html" class="brand">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <rect width="32" height="32" rx="9" fill="url(#tmGradU)" />
+            <path d="M10.5 11.5L21.5 11L16 21.5L10.5 11.5Z" stroke="#BAE6FD" stroke-width="1.8" />
+            <circle cx="10.5" cy="11.5" r="3" fill="#ffffff" />
+            <circle cx="21.5" cy="11" r="2.6" fill="#ffffff" />
+            <circle cx="16" cy="21.5" r="3.2" fill="#ffffff" />
+            <defs>
+              <linearGradient id="tmGradU" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#1D4ED8" />
+                <stop offset="1" stop-color="#0F766E" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span>Trailmind</span>
+        </a>
+        <a href="./index.html" class="back-link">← Back to Homepage</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="card">
+        <span class="eyebrow">Local data cleared by Chrome</span>
+        <h1>Sorry to see you go</h1>
+        <p class="lead">
+          Trailmind has been removed and Chrome automatically deleted your local encrypted memory.
+          If you have 10 seconds, tell us what didn&apos;t click so we can improve it.
+        </p>
+
+        <form id="survey">
+          <label class="option">
+            <input type="radio" name="reason" value="nano_setup" />
+            <span>Gemini Nano / Chrome flag setup felt complicated</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="reason" value="performance" />
+            <span>Chrome felt slower or used extra resources</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="reason" value="privacy" />
+            <span>I prefer not to record browsing history</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="reason" value="missing_feature" />
+            <span>Missing a workflow or integration I needed</span>
+          </label>
+          <label class="option">
+            <input type="radio" name="reason" value="other" />
+            <span>Just trying it out / Other</span>
+          </label>
+
+          <textarea
+            id="details"
+            placeholder="Optional note on what would bring you back…"
+            aria-label="Additional optional feedback"
+          ></textarea>
+
+          <div class="actions">
+            <a href="./index.html" class="btn-ghost">Return to Homepage</a>
+            <button type="submit" class="btn-primary">Send Feedback</button>
+          </div>
+        </form>
+
+        <div id="thanks" class="thanks" role="status">
+          <strong>Thank you for helping make Trailmind better.</strong>
+          Your feedback has been recorded. You can reinstall Trailmind anytime from the homepage.
+          <div style="margin-top: 14px">
+            <a href="./index.html" class="btn-ghost">← Back to Trailmind Homepage</a>
+          </div>
+        </div>
+
+        <p class="privacy-note">
+          Privacy pledge (FR-SET-4): Zero browsing history, URLs, or personal identifiers are
+          attached to this page—only the optional answer you choose to submit above.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <span>Trailmind · Your browsing, remembered. On your device.</span>
+        <a href="./index.html">Homepage</a>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('survey').addEventListener('submit', function (e) {
+        e.preventDefault();
+        document.getElementById('survey').style.display = 'none';
+        document.getElementById('thanks').style.display = 'block';
+      });
+    </script>
+  </body>
+</html>

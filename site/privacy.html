@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trailmind — Privacy Policy</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-subtle: #f8fafc;
+        --text: #0f172a;
+        --muted: #475569;
+        --border: #e2e8f0;
+        --accent: #2563eb;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #030712;
+          --bg-subtle: #0f172a;
+          --text: #f8fafc;
+          --muted: #94a3b8;
+          --border: #1e293b;
+          --accent: #3b82f6;
+        }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+      }
+      header {
+        border-bottom: 1px solid var(--border);
+        padding: 16px 24px;
+      }
+      .nav-inner {
+        max-width: 780px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-inner a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .nav-inner .back {
+        color: var(--muted);
+        font-weight: 500;
+      }
+      main {
+        max-width: 780px;
+        margin: 36px auto 64px;
+        padding: 0 24px;
+      }
+      h1, h2 { letter-spacing: -0.02em; }
+      p, li { color: var(--muted); font-size: 14.5px; }
+      code {
+        background: var(--bg-subtle);
+        border: 1px solid var(--border);
+        padding: 2px 6px;
+        border-radius: 6px;
+        font-size: 12.5px;
+        color: var(--text);
+      }
+      .box {
+        background: var(--bg-subtle);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px 20px;
+        margin: 20px 0;
+        color: var(--text);
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav-inner">
+        <a href="./index.html">Trailmind</a>
+        <a href="./index.html" class="back">← Back to Homepage</a>
+      </div>
+    </header>
+    <main>
+      <h1>Trailmind Privacy Policy</h1>
+      <p><strong>Effective date:</strong> November 21, 2026</p>
+
+      <div class="box">
+        <strong>Plain-language summary:</strong> Your browsing memory lives encrypted on your own
+        device. Trailmind does not show ads, does not sell your data, and never trains AI models on
+        your browsing history. With cloud options off (the default), <strong>zero bytes</strong> of
+        page content leave your browser.
+      </div>
+
+      <h2>1. Single Purpose &amp; Chrome Web Store Limited Use Disclosure</h2>
+      <p>
+        Trailmind has a single clear purpose: providing a private, personal browsing memory inside
+        your browser. The use and transfer to any other app of information received from Chrome APIs
+        (including browsing history and bookmarks) adheres strictly to the Chrome Web Store User Data
+        Policy, including the Limited Use requirements.
+      </p>
+
+      <h2>2. What Data Is Stored Locally</h2>
+      <ul>
+        <li>Readable text snapshots, extracted summaries, topics, entities, facts, and local embeddings stored inside Chrome IndexedDB encrypted at rest with AES-GCM 256 (WebCrypto).</li>
+        <li>Page visit timestamps, active reading time, and scroll depth for journeys and open loops.</li>
+        <li>Local routing logs (job type, duration, on-device vs. cloud count) with zero raw page content.</li>
+      </ul>
+
+      <h2>3. What Trailmind Never Collects</h2>
+      <ul>
+        <li>Incognito browsing windows or browser internal pages (<code>chrome://</code>, <code>about:</code>).</li>
+        <li>Passwords, typed form field values (<code>input.value</code>, <code>textarea.value</code>), or payment card information.</li>
+        <li>Excluded domains (pre-filled with banks, email providers, health portals, government ID portals, and password managers) or pages detected on-device as sensitive.</li>
+      </ul>
+
+      <h2>4. Hybrid AI &amp; Optional Cloud Services</h2>
+      <p>
+        Per-page extraction, sensitive-page classification, and live Memory Radar are hard-locked to
+        <code>ONLY_ON_DEVICE</code> via Chrome Gemini Nano. Optional cloud features (Ask Cloud,
+        Decision Matrix cloud escalation, stats-only Weekly Recap polish, and PDF/audio analysis) are
+        <strong>disabled by default</strong>. When explicitly enabled by you, only the minimum
+        required text (retrieved passages, extracted facts, or aggregated stats) is sent via Firebase
+        AI Logic protected by Firebase App Check, and every request is auditable in the Routing Inspector.
+      </p>
+
+      <h2>5. Optional End-to-End Encrypted Backup &amp; Sync</h2>
+      <p>
+        If you opt in to Google sign-in for backup or sync via Firebase Authentication and Cloud
+        Firestore, all records are encrypted on your device using a key derived from your passphrase
+        (PBKDF2-SHA256, 600,000 iterations) before upload. Trailmind and Firebase never receive your
+        passphrase or decryption key. You may delete all synced server data in one click in Settings.
+      </p>
+
+      <h2>6. Your Rights (GDPR &amp; Nigeria NDPA)</h2>
+      <ul>
+        <li><strong>Access &amp; Portability:</strong> Export your complete memory as Obsidian Markdown ZIP or full JSON.</li>
+        <li><strong>Erasure (Forget):</strong> Immediately delete the last 15 minutes, last 1 hour, any page, site, topic, cluster, date range, or your entire local database.</li>
+        <li><strong>Withdraw Consent:</strong> Pause recording globally or per tab, disable cloud switches, or delete server sync records.</li>
+      </ul>
+
+      <h2>7. Children&apos;s Privacy</h2>
+      <p>Trailmind is not directed at children under the age of 13 and does not knowingly collect data from children under 13.</p>
+
+      <p style="margin-top: 32px"><a href="./index.html" style="color: var(--accent); font-weight: 600; text-decoration: none">← Return to Trailmind Homepage</a></p>
+    </main>
+  </body>
+</html>
