@@ -1,0 +1,109 @@
+{
+  "parameters": {
+    "cloud_kill_switch": {
+      "defaultValue": { "value": "false" },
+      "description": "Emergency kill switch to disable all cloud AI calls remotely (FR-FB-2)",
+      "valueType": "BOOLEAN"
+    },
+    "cloud_model_name": {
+      "defaultValue": { "value": "gemini-3.5-flash-lite" },
+      "description": "Default cloud Gemini model for Firebase AI Logic fallback (FR-FB-2)",
+      "valueType": "STRING"
+    },
+    "mode_page_extraction": {
+      "defaultValue": { "value": "only_on_device" },
+      "description": "InferenceMode for page extraction — locked to only_on_device by privacy policy",
+      "valueType": "STRING"
+    },
+    "mode_sensitive_detection": {
+      "defaultValue": { "value": "only_on_device" },
+      "description": "InferenceMode for sensitive page detection — locked to only_on_device",
+      "valueType": "STRING"
+    },
+    "mode_cluster_naming": {
+      "defaultValue": { "value": "prefer_on_device" },
+      "description": "InferenceMode for cluster naming and summaries",
+      "valueType": "STRING"
+    },
+    "mode_ask_memory": {
+      "defaultValue": { "value": "prefer_on_device" },
+      "description": "InferenceMode for Ask your memory answers",
+      "valueType": "STRING"
+    },
+    "mode_loop_journey_summary": {
+      "defaultValue": { "value": "prefer_on_device" },
+      "description": "InferenceMode for open-loop and journey summaries",
+      "valueType": "STRING"
+    },
+    "mode_change_watch_diff": {
+      "defaultValue": { "value": "prefer_on_device" },
+      "description": "InferenceMode for change-watch diff summaries",
+      "valueType": "STRING"
+    },
+    "mode_image_understanding": {
+      "defaultValue": { "value": "prefer_on_device" },
+      "description": "InferenceMode for chart and diagram image descriptions",
+      "valueType": "STRING"
+    },
+    "mode_heavy_media_pdf": {
+      "defaultValue": { "value": "prefer_in_cloud" },
+      "description": "InferenceMode for opt-in PDF, audio, and video analysis",
+      "valueType": "STRING"
+    },
+    "mode_deep_summary": {
+      "defaultValue": { "value": "prefer_in_cloud" },
+      "description": "InferenceMode for opt-in month/topic deep summaries over extracted facts",
+      "valueType": "STRING"
+    },
+    "mode_weekly_recap": {
+      "defaultValue": { "value": "prefer_on_device" },
+      "description": "InferenceMode for weekly recap generation",
+      "valueType": "STRING"
+    },
+    "mode_memory_radar": {
+      "defaultValue": { "value": "only_on_device" },
+      "description": "InferenceMode for live ambient contradiction & price radar — locked to only_on_device",
+      "valueType": "STRING"
+    },
+    "mode_decision_matrix": {
+      "defaultValue": { "value": "prefer_on_device" },
+      "description": "InferenceMode for hybrid decision matrix (escalates facts-only to cloud on large clusters)",
+      "valueType": "STRING"
+    },
+    "seen_before_threshold": {
+      "defaultValue": { "value": "0.78" },
+      "description": "Cosine similarity threshold for the Seen Before in-page chip (FR-SB-2)",
+      "valueType": "NUMBER"
+    },
+    "backfill_domain_delay_ms": {
+      "defaultValue": { "value": "5000" },
+      "description": "Minimum milliseconds between backfill requests to the same domain (FR-BF-6)",
+      "valueType": "NUMBER"
+    },
+    "backfill_max_parallel": {
+      "defaultValue": { "value": "4" },
+      "description": "Maximum concurrent backfill fetches (FR-BF-6)",
+      "valueType": "NUMBER"
+    },
+    "change_watch_interval_hours": {
+      "defaultValue": { "value": "12" },
+      "description": "Default schedule interval in hours for Change Watch checks (FR-CW-3)",
+      "valueType": "NUMBER"
+    },
+    "cloud_daily_quota_per_user": {
+      "defaultValue": { "value": "50" },
+      "description": "Per-user daily cloud request quota guard (SEC-6)",
+      "valueType": "NUMBER"
+    },
+    "prompt_schema_version": {
+      "defaultValue": { "value": "1.0.0" },
+      "description": "Active prompt and schema version tag stored on extracted records (FR-FB-4, FR-AI-6)",
+      "valueType": "STRING"
+    },
+    "prompt_templates_json": {
+      "defaultValue": { "value": "{}" },
+      "description": "Optional Remote Config JSON overrides for prompt templates as data (FR-FB-4)",
+      "valueType": "JSON"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+rules_version = '2';
+
+// Trailmind Firestore Security Rules (FR-FB-7, SEC-7)
+// Enforces strict owner-only access, ciphertext-only storage, field allowlists (hasOnly),
+// type checks, and payload size bounds to prevent resource exhaustion and plaintext leaks.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function isValidBackupEnvelope(data) {
+      return data.keys().hasOnly(['ciphertext', 'iv', 'salt', 'schemaVersion', 'updatedAt'])
+        && data.keys().hasAll(['ciphertext', 'iv', 'salt', 'schemaVersion', 'updatedAt'])
+        && data.ciphertext is string
+        && data.ciphertext.size() > 0
+        && data.ciphertext.size() <= 900000
+        && data.iv is string
+        && data.iv.size() >= 12
+        && data.iv.size() <= 64
+        && data.salt is string
+        && data.salt.size() >= 16
+        && data.salt.size() <= 128
+        && data.schemaVersion is int
+        && data.schemaVersion >= 1
+        && data.schemaVersion <= 100
+        && data.updatedAt is int
+        && data.updatedAt > 0;
+    }
+
+    function isValidSyncRecord(data, recordKey) {
+      return data.keys().hasOnly([
+          'ciphertext',
+          'iv',
+          'salt',
+          'schemaVersion',
+          'updatedAt',
+          'recordId',
+          'collection',
+          'versionVector',
+          'deleted'
+        ])
+        && data.keys().hasAll([
+          'ciphertext',
+          'iv',
+          'salt',
+          'schemaVersion',
+          'updatedAt',
+          'recordId',
+          'collection',
+          'versionVector',
+          'deleted'
+        ])
+        && data.ciphertext is string
+        && data.ciphertext.size() > 0
+        && data.ciphertext.size() <= 900000
+        && data.iv is string
+        && data.iv.size() >= 12
+        && data.iv.size() <= 64
+        && data.salt is string
+        && data.salt.size() >= 16
+        && data.salt.size() <= 128
+        && data.schemaVersion is int
+        && data.schemaVersion >= 1
+        && data.schemaVersion <= 100
+        && data.updatedAt is int
+        && data.updatedAt > 0
+        && data.recordId is string
+        && data.recordId.size() > 0
+        && data.recordId.size() <= 200
+        && data.collection is string
+        && data.collection in ['pages', 'clusters', 'journeys', 'loops', 'watches', 'recaps', 'settings', 'facts', 'snapshots']
+        && recordKey == (data.collection + '_' + data.recordId)
+        && data.versionVector is map
+        && data.versionVector.size() <= 32
+        && data.deleted is bool;
+    }
+
+    // Encrypted profile backup (FR-FB-6): settings, exclusions, cluster names, watches, recaps
+    match /users/{uid}/backups/{backupId} {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && backupId in ['primary', 'manual']
+        && isValidBackupEnvelope(request.resource.data);
+      allow delete: if isOwner(uid);
+    }
+
+    // Incremental end-to-end encrypted sync records (FR-SY-2, FR-SY-3, FR-SY-5)
+    match /users/{uid}/sync/{recordKey} {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && isValidSyncRecord(request.resource.data, recordKey);
+      allow delete: if isOwner(uid);
+    }
+
+    // Encrypted sync metadata (passphrase verification blob only — never raw keys)
+    match /users/{uid}/meta/{metaId} {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && metaId == 'syncConfig'
+        && request.resource.data.keys().hasOnly(['keyCheckCiphertext', 'keyCheckIv', 'salt', 'iterations', 'updatedAt'])
+        && request.resource.data.keys().hasAll(['keyCheckCiphertext', 'keyCheckIv', 'salt', 'iterations', 'updatedAt'])
+        && request.resource.data.keyCheckCiphertext is string
+        && request.resource.data.keyCheckCiphertext.size() > 0
+        && request.resource.data.keyCheckCiphertext.size() <= 1024
+        && request.resource.data.keyCheckIv is string
+        && request.resource.data.keyCheckIv.size() >= 12
+        && request.resource.data.keyCheckIv.size() <= 64
+        && request.resource.data.salt is string
+        && request.resource.data.salt.size() >= 16
+        && request.resource.data.salt.size() <= 128
+        && request.resource.data.iterations is int
+        && request.resource.data.iterations >= 600000
+        && request.resource.data.iterations <= 5000000
+        && request.resource.data.updatedAt is int
+        && request.resource.data.updatedAt > 0;
+      allow delete: if isOwner(uid);
+    }
+
+    // Default deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
